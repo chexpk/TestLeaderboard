@@ -10,16 +10,12 @@ public class LeaderboardManager : MonoBehaviour
     [SerializeField] private Transform containerTransform;
     [SerializeField] private GameObject panelPrefab;
     [SerializeField] private GameObject editDisplayGO;
+    
     private EditDisplay editDisplay;
-    
-    
-    
     private Highscores currentHighScores;
     private List<GameObject> currentPanelsList;
-    
     private int indexOfSelectedPlayerInfo;
     private bool isSeleckted = false;
-
     private int indexOfEditedPlayerInfo;
 
     private void Awake()
@@ -39,14 +35,11 @@ public class LeaderboardManager : MonoBehaviour
     void AddHighScorePlayerInfo(string namePLayer, int score)
     {
         PlayerInfo playerInfo = new PlayerInfo(namePLayer, score);
-        
         if (currentHighScores == null)
         {
-            // Debug.Log("Create HighScore");
             currentHighScores = new Highscores();
             currentHighScores.highScorePlayers = new List<PlayerInfo>();
         }
-        
         currentHighScores.highScorePlayers.Add(playerInfo);
     }
 
@@ -120,7 +113,7 @@ public class LeaderboardManager : MonoBehaviour
         editDisplay.SetPlayerInfoToField(GetEditedPlayerInfo());
     }
 
-    public PlayerInfo GetEditedPlayerInfo()
+    PlayerInfo GetEditedPlayerInfo()
     {
         return currentHighScores.highScorePlayers[indexOfEditedPlayerInfo];
     }
@@ -135,11 +128,6 @@ public class LeaderboardManager : MonoBehaviour
 
     void RemoveSelectedPlayerInfo()
     {
-        // if (currentHighScores == null)
-        // {
-        //     currentHighScores = new Highscores();
-        //     currentHighScores.highScorePlayers = new List<PlayerInfo>();
-        // }
         if(currentHighScores.highScorePlayers.Count == 0) return;
 
         if (currentHighScores.highScorePlayers[indexOfSelectedPlayerInfo] == null)
@@ -152,7 +140,6 @@ public class LeaderboardManager : MonoBehaviour
     public void EditPlayerInfo(PlayerInfo playerInfo)
     {
         currentHighScores.highScorePlayers[indexOfEditedPlayerInfo] = playerInfo;
-        
         SortPlayersInfoByHighScore();
         RefreshPanels();
     }

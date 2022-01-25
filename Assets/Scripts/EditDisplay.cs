@@ -31,5 +31,4 @@ public class EditDisplay : MonoBehaviour
         nameInputField.text = "";
         scoreInputField.text = "";
     }
-    
 }

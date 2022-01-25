@@ -12,5 +12,4 @@ public class PlayerInfo
         playerName = name;
         playerScore = score;
     }
-    
 }

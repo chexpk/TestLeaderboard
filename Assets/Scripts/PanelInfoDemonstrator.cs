@@ -8,8 +8,7 @@ public class PanelInfoDemonstrator : MonoBehaviour
     [SerializeField] private Text namePlayer;
     [SerializeField] private Text scorePlayer;
     private int indexPositionPlayer;
-
-
+    
     public void SetPlayerInfo(int position, string name, int score)
     {
         positionPlayer.text = (position + 1).ToString();

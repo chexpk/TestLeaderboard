@@ -22,15 +22,11 @@ public class PanelPressedDetector : MonoBehaviour, IPointerClickHandler
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            // onLeftClick.Invoke();
             Select();
-            Debug.Log( "Left was clicked");
         }
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
-            // onRightClick.Invoke();
             RightClick();
-            Debug.Log( "Right was clicked");
         }
     }
 
@@ -39,18 +35,17 @@ public class PanelPressedDetector : MonoBehaviour, IPointerClickHandler
         leaderboardManager = manager;
     }
     
+    public void Unselect()
+    {
+        backImagePanel.color = defaultColor;
+    }
+    
     void Select()
     {
         leaderboardManager.UnselectAllPanels();
         backImagePanel.color = selectedColor;
         int indexOfPanel = panelDemonstrator.GetPosition();
         leaderboardManager.SelectPanel(indexOfPanel);
-        //leaderboardManager.SelectPanel(int index)?
-    }
-
-    public void Unselect()
-    {
-        backImagePanel.color = defaultColor;
     }
 
     void RightClick()
