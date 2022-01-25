@@ -29,6 +29,7 @@ public class PanelPressedDetector : MonoBehaviour, IPointerClickHandler
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
             // onRightClick.Invoke();
+            RightClick();
             Debug.Log( "Right was clicked");
         }
     }
@@ -50,5 +51,12 @@ public class PanelPressedDetector : MonoBehaviour, IPointerClickHandler
     public void Unselect()
     {
         backImagePanel.color = defaultColor;
+    }
+
+    void RightClick()
+    {
+        leaderboardManager.UnselectAllPanels();
+        int indexOfPanel = panelDemonstrator.GetPosition();
+        leaderboardManager.OpenToEditPlayerInfoByIndex(indexOfPanel);
     }
 }

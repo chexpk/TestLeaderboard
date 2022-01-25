@@ -9,7 +9,9 @@ public class LeaderboardManager : MonoBehaviour
 {
     [SerializeField] private Transform containerTransform;
     [SerializeField] private GameObject panelPrefab;
-    [SerializeField] private Button removeButton;
+    [SerializeField] private GameObject editDisplayGO;
+    private EditDisplay editDisplay;
+    
     
     
     private Highscores currentHighScores;
@@ -17,6 +19,13 @@ public class LeaderboardManager : MonoBehaviour
     
     private int indexOfSelectedPlayerInfo;
     private bool isSeleckted = false;
+
+    private int indexOfEditedPlayerInfo;
+
+    private void Awake()
+    {
+        editDisplay = editDisplayGO.GetComponent<EditDisplay>();
+    }
 
     private void Start()
     {
@@ -104,10 +113,21 @@ public class LeaderboardManager : MonoBehaviour
         indexOfSelectedPlayerInfo = index;
     }
 
+    public void OpenToEditPlayerInfoByIndex(int indexEdited)
+    {
+        indexOfEditedPlayerInfo = indexEdited;
+        editDisplayGO.SetActive(true);
+        editDisplay.SetPlayerInfoToField(GetEditedPlayerInfo());
+    }
+
+    public PlayerInfo GetEditedPlayerInfo()
+    {
+        return currentHighScores.highScorePlayers[indexOfEditedPlayerInfo];
+    }
+
     public void OnRemoveButton()
     {
         if(!isSeleckted) return;
-        Debug.Log(indexOfSelectedPlayerInfo);
         RemoveSelectedPlayerInfo();
         SortPlayersInfoByHighScore();
         RefreshPanels();
@@ -115,19 +135,25 @@ public class LeaderboardManager : MonoBehaviour
 
     void RemoveSelectedPlayerInfo()
     {
-        if (currentHighScores == null)
-        {
-            // Debug.Log("Create HighScore");
-            currentHighScores = new Highscores();
-            currentHighScores.highScorePlayers = new List<PlayerInfo>();
-        }
+        // if (currentHighScores == null)
+        // {
+        //     currentHighScores = new Highscores();
+        //     currentHighScores.highScorePlayers = new List<PlayerInfo>();
+        // }
+        if(currentHighScores.highScorePlayers.Count == 0) return;
 
         if (currentHighScores.highScorePlayers[indexOfSelectedPlayerInfo] == null)
         {
             Debug.Log("Error: try delete non-existent index");
         }
-        Debug.Log(currentHighScores.highScorePlayers.Count);
         currentHighScores.highScorePlayers.RemoveAt(indexOfSelectedPlayerInfo);
-        Debug.Log(currentHighScores.highScorePlayers.Count);
+    }
+
+    public void EditPlayerInfo(PlayerInfo playerInfo)
+    {
+        currentHighScores.highScorePlayers[indexOfEditedPlayerInfo] = playerInfo;
+        
+        SortPlayersInfoByHighScore();
+        RefreshPanels();
     }
 }
