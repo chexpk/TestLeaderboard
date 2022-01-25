@@ -15,14 +15,4 @@ public class PanelInfoDemonstrator : MonoBehaviour
         namePlayer.text = name;
         scorePlayer.text = score.ToString();
     }
-    
-    public virtual void OnPointerClick()
-    {
-        Debug.Log(namePlayer.text + " was clicked");
-    }
-    
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        Debug.Log(this.gameObject.name + " Was Clicked.");
-    }
 }

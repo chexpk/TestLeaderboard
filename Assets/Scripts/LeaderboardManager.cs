@@ -2,22 +2,27 @@ using System;
 using System.Collections.Generic;
 using DefaultNamespace;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class LeaderboardManager : MonoBehaviour
 {
     [SerializeField] private Transform containerTransform;
     [SerializeField] private GameObject panelPrefab;
+    [SerializeField] private Button removeButton;
+    
+    
     private Highscores currentHighScores;
     private List<GameObject> currentPanelsList;
+    
+    private int indexOfSelectedPlayerInfo;
+    private bool isSeleckted = false;
 
     private void Start()
     {
-        AddHighScorePlayerInfo("Ololo1", 0001);
-        AddHighScorePlayerInfo("Ololo2", 0002);
-        AddHighScorePlayerInfo("Ololo3", 0003);
-        AddHighScorePlayerInfo("Ololo4", 1004);
-        AddHighScorePlayerInfo("Ololo5", 1005);
+        AddHighScorePlayerInfo("Nickname", 100);
+        AddHighScorePlayerInfo("Nickname 1", 50);
+        
         SortPlayersInfoByHighScore();
         RefreshPanels();
     }
@@ -58,16 +63,7 @@ public class LeaderboardManager : MonoBehaviour
             Destroy(panel.gameObject);
         }
     }
-
-    public void AddNewPlayerInfo()
-    {
-        int score = Random.Range(0, 2000);
-        string name = $"Ololo {score}";
-        AddHighScorePlayerInfo(name, score);
-        SortPlayersInfoByHighScore();
-        RefreshPanels();
-    }
-
+    
     void SortPlayersInfoByHighScore()
     {
         for (int i = 0; i < currentHighScores.highScorePlayers.Count; i++) {
@@ -78,6 +74,24 @@ public class LeaderboardManager : MonoBehaviour
                     currentHighScores.highScorePlayers[j] = tmp;
                 }
             }
+        }
+    }
+    
+    public void AddNewPlayerInfo(string namePlayer, int scorePlayer)
+    {
+        // int score = Random.Range(0, 2000);
+        // string name = $"Ololo {score}";
+        AddHighScorePlayerInfo(namePlayer, scorePlayer);
+        SortPlayersInfoByHighScore();
+        RefreshPanels();
+    }
+
+    public void UnselectAllPanels()
+    {
+        if(currentPanelsList == null) return;
+        foreach (var panel in currentPanelsList)
+        {
+            //set default color
         }
     }
 }
