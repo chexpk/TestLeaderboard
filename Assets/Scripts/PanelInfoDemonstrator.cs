@@ -7,12 +7,19 @@ public class PanelInfoDemonstrator : MonoBehaviour
     [SerializeField] private Text positionPlayer;
     [SerializeField] private Text namePlayer;
     [SerializeField] private Text scorePlayer;
+    private int indexPositionPlayer;
 
 
     public void SetPlayerInfo(int position, string name, int score)
     {
-        positionPlayer.text = position.ToString();
+        positionPlayer.text = (position + 1).ToString();
+        indexPositionPlayer = position;
         namePlayer.text = name;
         scorePlayer.text = score.ToString();
+    }
+
+    public int GetPosition()
+    {
+        return indexPositionPlayer;
     }
 }

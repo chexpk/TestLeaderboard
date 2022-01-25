@@ -50,7 +50,9 @@ public class LeaderboardManager : MonoBehaviour
         {
             var pan = Instantiate(panelPrefab, containerTransform);
             var panDemonstrator = pan.GetComponent<PanelInfoDemonstrator>();
-            panDemonstrator.SetPlayerInfo(i+1, currentHighScores.highScorePlayers[i].playerName, currentHighScores.highScorePlayers[i].playerScore);
+            panDemonstrator.SetPlayerInfo(i, currentHighScores.highScorePlayers[i].playerName, currentHighScores.highScorePlayers[i].playerScore);
+            var panPressDetector = pan.GetComponent<PanelPressedDetector>();
+            panPressDetector.SetManager(this);
             currentPanelsList.Add(pan);
         }
     }
@@ -91,7 +93,41 @@ public class LeaderboardManager : MonoBehaviour
         if(currentPanelsList == null) return;
         foreach (var panel in currentPanelsList)
         {
-            //set default color
+            panel.GetComponent<PanelPressedDetector>().Unselect();
         }
+        isSeleckted = false;
+    }
+
+    public void SelectPanel(int index)
+    {
+        isSeleckted = true;
+        indexOfSelectedPlayerInfo = index;
+    }
+
+    public void OnRemoveButton()
+    {
+        if(!isSeleckted) return;
+        Debug.Log(indexOfSelectedPlayerInfo);
+        RemoveSelectedPlayerInfo();
+        SortPlayersInfoByHighScore();
+        RefreshPanels();
+    }
+
+    void RemoveSelectedPlayerInfo()
+    {
+        if (currentHighScores == null)
+        {
+            // Debug.Log("Create HighScore");
+            currentHighScores = new Highscores();
+            currentHighScores.highScorePlayers = new List<PlayerInfo>();
+        }
+
+        if (currentHighScores.highScorePlayers[indexOfSelectedPlayerInfo] == null)
+        {
+            Debug.Log("Error: try delete non-existent index");
+        }
+        Debug.Log(currentHighScores.highScorePlayers.Count);
+        currentHighScores.highScorePlayers.RemoveAt(indexOfSelectedPlayerInfo);
+        Debug.Log(currentHighScores.highScorePlayers.Count);
     }
 }
