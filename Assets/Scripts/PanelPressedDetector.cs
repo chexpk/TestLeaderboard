@@ -7,6 +7,7 @@ public class PanelPressedDetector : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private Color selectedColor;
     [SerializeField] private Image backImagePanel;
+    [SerializeField] private Image backImagePanel2;
     
     private LeaderboardManager leaderboardManager;
     private Color defaultColor;
@@ -38,12 +39,14 @@ public class PanelPressedDetector : MonoBehaviour, IPointerClickHandler
     public void Unselect()
     {
         backImagePanel.color = defaultColor;
+        backImagePanel2.color = defaultColor;
     }
     
     void Select()
     {
         leaderboardManager.UnselectAllPanels();
         backImagePanel.color = selectedColor;
+        backImagePanel2.color = selectedColor;
         int indexOfPanel = panelDemonstrator.GetPosition();
         leaderboardManager.SelectPanel(indexOfPanel);
     }
